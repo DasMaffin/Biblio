@@ -1,0 +1,43 @@
+{
+    "_comment": "Used in the backend. this is just here to have a better view over it.",
+
+    "publishers": [
+        "Anchor"
+    ],
+    "subtitle": "Shouts of Nothingness",
+    "covers": [
+        "// Take first",
+        240727,
+        3364000,
+        3363999,
+        3363998,
+        3364001,
+        3363976,
+        3363990
+    ],
+    "key": "/books/OL7440033M",
+    "authors": [
+        {
+            "key": "/authors/OL2677946A"
+        }
+    ],
+    "contributions": [
+        "Brian Bruya (Translator)"
+    ],
+    "languages": [
+        {
+            "key": "/languages/eng"
+        }
+    ],
+    "title": "Zen Speaks",
+    "number_of_pages": 160,
+    "isbn_13": [
+        "9780385472579"
+    ],
+    "publish_date": "April 15, 1994",
+    "works": [
+        {
+            "key": "/works/OL8052318W"
+        }
+    ]
+}

@@ -1,0 +1,287 @@
+<!--CSS: https://bootdey.com/snippets/view/bs4-contact-cards-->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-top: 0; padding-top: 0;">
+  <a class="navbar-brand" style="color:white;">Biblio</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarColor02">
+     <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+           <a class="nav-link btn" (click)="onOpenModal(null, 'add')">Buch hinzufügen<span class="sr-only">(current)</span></a>
+        </li>
+     </ul>
+  </div>
+</nav>
+<div class="container" id="main-container">
+   <br>
+   Legende:<br>
+    <div class="row">
+      <div class="legend-container">
+         <div class="legend-column">
+           <div><div class="box red"></div>= Seitenfaktor: 0.7x</div>
+           <br>
+           <div><div class="box dark-orange"></div>= Seitenfaktor: 1x</div>
+           <br>
+           <div><div class="box burnt-orange"></div>= Seitenfaktor: 1.1x</div>
+         </div>
+         <div class="legend-column">
+           <div><div class="box dark-goldenrod"></div>= Seitenfaktor: 1.2x</div>
+           <br>
+           <div><div class="box golden-drab"></div>= Seitenfaktor: 1.3x</div>
+           <br>
+           <div><div class="box lime-green"></div>= Seitenfaktor: 1.5x</div>
+         </div>
+         <div class="legend-column">
+           <div><div class="box green"></div>= Datumsbonus vor 1990 (15€), oder Sprachbonus Deutsch (10%)</div>
+         </div>
+       </div>
+         <table id = sortableTable>
+            <thead>
+               <tr>
+                  <th></th>
+                  <th (click)="sortTable('Title')">
+                     Titel 
+                     <span class="arrow-stack">
+                        <span *ngIf="sortColumn === 'Title' && sortDirection === 1" style="vertical-align: middle;">&#9650;</span>
+                        <span *ngIf="sortColumn === 'Title' && sortDirection === -1" style="vertical-align: middle;">&#9660;</span>
+                        <span *ngIf="sortColumn !== 'Title'">&#9650;</span>
+                        <span *ngIf="sortColumn !== 'Title'">&#9660;</span>
+                     </span>
+                  </th>
+                  <th (click)="sortTable('ISBN')">
+                     ISBN 
+                     <span class="arrow-stack">
+                        <span *ngIf="sortColumn === 'ISBN' && sortDirection === 1" style="vertical-align: middle;">&#9650;</span>
+                        <span *ngIf="sortColumn === 'ISBN' && sortDirection === -1" style="vertical-align: middle;">&#9660;</span>
+                        <span *ngIf="sortColumn !== 'ISBN'">&#9650;</span>
+                        <span *ngIf="sortColumn !== 'ISBN'">&#9660;</span>
+                     </span>
+                  </th>
+                  <th (click)="sortTable('Pages')">
+                     Seiten 
+                     <span class="arrow-stack">
+                        <span *ngIf="sortColumn === 'Pages' && sortDirection === 1" style="vertical-align: middle;">&#9650;</span>
+                        <span *ngIf="sortColumn === 'Pages' && sortDirection === -1" style="vertical-align: middle;">&#9660;</span>
+                        <span *ngIf="sortColumn !== 'Pages'">&#9650;</span>
+                        <span *ngIf="sortColumn !== 'Pages'">&#9660;</span>
+                     </span>
+                  </th>
+                  <th (click)="sortTable('ReleaseDate')">
+                     Erscheinungsdatum 
+                     <span class="arrow-stack">
+                        <span *ngIf="sortColumn === 'ReleaseDate' && sortDirection === 1" style="vertical-align: middle;">&#9650;</span>
+                        <span *ngIf="sortColumn === 'ReleaseDate' && sortDirection === -1" style="vertical-align: middle;">&#9660;</span>
+                        <span *ngIf="sortColumn !== 'ReleaseDate'">&#9650;</span>
+                        <span *ngIf="sortColumn !== 'ReleaseDate'">&#9660;</span>
+                     </span>
+                  </th>
+                  <th (click)="sortTable('Language')">
+                     Sprache                      
+                     <span class="arrow-stack">
+                        <span *ngIf="sortColumn === 'Language' && sortDirection === 1" style="vertical-align: middle;">&#9650;</span>
+                        <span *ngIf="sortColumn === 'Language' && sortDirection === -1" style="vertical-align: middle;">&#9660;</span>
+                        <span *ngIf="sortColumn !== 'Language'">&#9650;</span>
+                        <span *ngIf="sortColumn !== 'Language'">&#9660;</span>
+                     </span>
+                  </th>
+                  <th (click)="sortTable('MainSubjectGroup')">
+                     Themengruppe 
+                     <span class="arrow-stack">
+                        <span *ngIf="sortColumn === 'MainSubjectGroup' && sortDirection === 1" style="vertical-align: middle;">&#9650;</span>
+                        <span *ngIf="sortColumn === 'MainSubjectGroup' && sortDirection === -1" style="vertical-align: middle;">&#9660;</span>
+                        <span *ngIf="sortColumn !== 'MainSubjectGroup'">&#9650;</span>
+                        <span *ngIf="sortColumn !== 'MainSubjectGroup'">&#9660;</span>
+                     </span>
+                  </th>
+                  <th (click)="sortTable('SubSubjectGroup')">
+                     Unterthemengruppe 
+                     <span class="arrow-stack">
+                        <span *ngIf="sortColumn === 'SubSubjectGroup' && sortDirection === 1" style="vertical-align: middle;">&#9650;</span>
+                        <span *ngIf="sortColumn === 'SubSubjectGroup' && sortDirection === -1" style="vertical-align: middle;">&#9660;</span>
+                        <span *ngIf="sortColumn !== 'SubSubjectGroup'">&#9650;</span>
+                        <span *ngIf="sortColumn !== 'SubSubjectGroup'">&#9660;</span>
+                     </span>
+                  </th>
+                  <th (click)="sortTable('Compensation')">
+                     Vergütungsbetrag 
+                     <span class="arrow-stack">
+                        <span *ngIf="sortColumn === 'Compensation' && sortDirection === 1" style="vertical-align: middle;">&#9650;</span>
+                        <span *ngIf="sortColumn === 'Compensation' && sortDirection === -1" style="vertical-align: middle;">&#9660;</span>
+                        <span *ngIf="sortColumn !== 'Compensation'">&#9650;</span>
+                        <span *ngIf="sortColumn !== 'Compensation'">&#9660;</span>
+                     </span>
+                  </th>
+                  <th>Optionen</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let book of books" (click)="toggleCheckbox(book)">
+                 <td><input type="checkbox" [(ngModel)]="book.Selected" (change)="updateTotalCompensation()"/></td>
+                 <td class="truncate">{{ book.Title }}</td>
+                 <td>{{ book.ISBN }}</td>
+                 <td [style.background-color]="getFixedGradientColor(book.Pages)">{{ book.Pages }}</td>
+                 <td [style.background-color]="checkReleaseDate(book.ReleaseDate) ? 'green' : ''">{{ book.ReleaseDate }}</td>
+                 <td [style.background-color]="book.Language === 'Deutsch' ? 'green' : ''">{{ book.Language }}</td>
+                 <td>{{ subjectGroupService.FindNameByEnum(book.MainSubjectGroup) }}</td>
+                 <td>{{ subjectGroupService.FindNameByEnum(book.SubSubjectGroup)  }}</td>
+                 <td>{{ Compensation(book).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2})}}€</td>
+                 <td>
+                  <div class="float-left btn-group btn-group-sm">
+                     <a  (click)="onOpenModal(book, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                     <a  (click)="onOpenModal(book, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                  </div>
+                 </td>
+               </tr>
+             </tbody>
+         </table>
+         <div>Vergütungsbetrag aller ausgewählten Bücher: {{ totalCompensation.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2})}}€</div>
+         <br>
+      </div>
+    </div>
+
+<!-- Add Book Modal -->
+<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addBookModalLabel">Buch hinzufügen</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body" id="AddBookModalBody">
+          <form #addForm="ngForm" (ngSubmit)="onAddBook(addForm)">
+          <div class="form-group">
+             <label for="isbn">ISBN</label>
+             <input type="text" ngModel name="ISBN" class="form-control" id="isbn" placeholder="987-0-00-000000-0" pattern="[0-9\s\-]*" required>
+          </div>
+          <div class="form-group">
+             <label for="title">Titel</label>
+             <input type="text" ngModel name="Title" class="form-control" id="title" placeholder="Titel" required>
+          </div>
+          
+          <div class="form-group">
+             <label for="pages">Seitenzahl</label>
+             <input type="number" ngModel name="Pages" class="form-control" id="pages" placeholder="49" min="0" max="10000">
+          </div>
+          <div class="form-group">
+            <label for="ReleaseDate">Erscheinungsdatum</label>
+            <input type="date" ngModel name="ReleaseDate" class="form-control" id="ReleaseDate" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="LanguageSelect">Sprache</label>
+            <select id="LanguageSelect" class="form-control" ngModel name="Language" >
+              <option *ngFor="let language of languageService.staticAllLanguages" [ngValue]="language.name" >{{ language.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="MainSubjectGroupSelect">Hauptthemengruppe</label>
+            <select id="MainSubjectGroupSelect" class="form-control" ngModel name="MainSubjectGroup">
+                <option *ngFor="let MSG of subjectGroupService.staticAllSubjectGroups;" [ngValue]="MSG.name">{{ MSG.name }}</option>
+            </select>
+         </div>
+          <div class="form-group">
+            <label for="SubSubjectGroupSelect">Unterthemengruppe</label>
+            <select id="SubSubjectGroupSelect" class="form-control" ngModel name="SubSubjectGroup" >
+              <option *ngFor="let SSG of subjectGroupService.staticAllSubjectGroups;" [ngValue]="SSG.name">{{ SSG.name }}</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+             <button type="button" id="add-book-form" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Änderungen speichern</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+  </div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editBookModal" tabindex="-1" role="dialog" aria-labelledby="bookEditModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="updateBookModalLabel">Buch Berabeiten: {{editBook?.Title}}</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body" id="EditBookModalBody">
+           <form #editForm="ngForm">
+            <div class="form-group">
+                  <label for="ISBN">ISBN</label>
+                  <input type="text" ngModel="{{editBook?.ISBN}}" name="ISBN" class="form-control" id="ISBN" placeholder="987-0-00-000000-0" pattern="[0-9\s\-]*" required>
+              </div>
+              <div class="form-group">
+                 <label for="Title">Titel</label>
+                 <input type="text" ngModel="{{editBook?.Title}}" name="Title" class="form-control" id="Title" aria-describedby="emailHelp" placeholder="Titel" required>
+              </div>              
+              
+              <div class="form-group">
+                 <label for="Pages">Seiten</label>
+                 <input type="number" ngModel="{{editBook?.Pages}}" name="Pages" class="form-control" id="Pages" placeholder="49">
+              </div>
+              <div class="form-group">
+               <label for="ReleaseDate">Erscheinungsdatum</label>
+               <input type="date" ngModel="{{editBook?.ReleaseDate}}" name="ReleaseDate" class="form-control" id="ReleaseDate" placeholder="">
+              </div>
+              <div class="form-group">
+               <label for="LanguageSelect">Sprache</label>
+               <select id="LanguageSelect" class="form-control" ngModel="{{editBook?.Language}}" name="Language">
+                 <option *ngFor="let language of languageService.staticAllLanguages" [ngValue]="language.name" [selected]="language.name == editBook?.Language">{{ language.name }}</option>
+               </select>
+             </div>
+
+             <!-- This took me way too long, for some reason it didnt bind correctly and either changed the value of the object to null even tho something was selected, or it selected nothing even tho the object had a value...-->
+             <div class="form-group">
+               <label for="MainSubjectGroupSelect">Hauptthemengruppe</label>
+               <select id="MainSubjectGroupSelect" class="form-control" ngModel="{{ editBook?.MainSubjectGroup }}" name="MainSubjectGroup">
+                 <option *ngFor="let MSG of subjectGroupService.staticAllSubjectGroups;" [ngValue]="MSG.name" [selected]="MSG.enum == editBook?.MainSubjectGroup?.toString()" >{{ MSG.name }}</option>
+               </select>
+             </div>
+             <div class="form-group">
+               <label for="SubSubjectGroupSelect">Unterthemengruppe</label>
+               <select id="SubSubjectGroupSelect" class="form-control" ngModel="{{editBook?.SubSubjectGroup}}" name="SubSubjectGroup">
+                 <option *ngFor="let SSG of subjectGroupService.staticAllSubjectGroups;" [ngValue]="SSG.name" [selected]="SSG.enum == editBook?.SubSubjectGroup?.toString()">{{ SSG.name }}</option>
+               </select>
+             </div>
+
+              <div class="modal-footer">
+                <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Schließen</button>
+                <button [disabled]="editForm.invalid" (click)="onEditBook(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Änderungen speichern</button>
+             </div>
+           </form>
+        </div>
+     </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteBookModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="deleteModelLabel">Delete Book</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <p>Are you sure you want to delete the book: {{deleteBook?.Title}}?</p>
+           <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+              <button (click)="deleteBook != null && deleteBook.ISBN != null && onDeleteBook(deleteBook.ISBN)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+           </div>
+        </div>
+     </div>
+  </div>
+</div>
+
+<!-- Notification for no books -->
+<div *ngIf="books?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+<div class="alert alert-info" role="alert">
+  <h4 class="alert-heading">NO BOOKS!</h4>
+  <p>No Books were found.</p>
+</div>
+</div>
